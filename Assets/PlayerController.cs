@@ -7,9 +7,12 @@ public class PlayerController : PhysicsObject {
     public float jumpTakeOffSpeed = 7;
     public float maxSpeed = 7;
 
+    public bool changeCamera;
+
 	void Start () {
-		
+        changeCamera = false;
 	}
+
 
     protected override void ComputeVelocity() {
         /* The purpose of this function is to check
@@ -43,4 +46,12 @@ public class PlayerController : PhysicsObject {
 
         targetVelocity = movement * maxSpeed;
     }
+
+    void OnTriggerExit2D(Collider2D collider) {
+        if (collider.gameObject.name == "FloorChange")
+            changeCamera = true;
+    }
+
+
+
 }

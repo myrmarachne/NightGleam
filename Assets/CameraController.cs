@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
@@ -9,7 +7,7 @@ public class CameraController : MonoBehaviour {
      * się za postacią wyłącznie prawo-lewo cały czas, z kolei
      * góra-dół - wyłącznie przy zmianie "poziomu" */
 
-    public GameObject mainCharacter;
+    private PlayerController playerController;
 
     // Offset distane between mainCharacter and the camera
     private Vector3 offset;
@@ -17,14 +15,39 @@ public class CameraController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        /* Calculate the distance between transform.position of camera
-         * and the transform.position of the mainCharacter */
+        playerController = FindObjectOfType<PlayerController>();
 
-        offset = transform.position - mainCharacter.transform.position;
-	}
-	
-	// Runs after the Update() function
-	void LateUpdate () {
-        transform.position = mainCharacter.transform.position + offset;
-	}
+        /* Calculate the distance between transform.position of camera
+         * and the transform.position of the playerController game object */
+
+        offset = transform.position - playerController.gameObject.transform.position;
+    }
+
+    // Runs after the Update() function
+    void LateUpdate () {
+
+        Vector3 camera = Vector3.zero;
+
+        if (playerController.changeCamera) {
+            
+            /* Change the camera vertically */
+            camera.x = playerController.gameObject.transform.position.x + offset.x;
+            camera.z = transform.position.z;
+            camera.y = playerController.gameObject.transform.position.y + offset.y;
+
+            playerController.changeCamera = false;
+            
+        } else {
+
+            /* Change the camera horizontally */
+
+            camera.x = playerController.gameObject.transform.position.x + offset.x;
+            camera.z = transform.position.z;
+            camera.y = transform.position.y;
+        }
+
+        transform.position = camera;
+    }
+
+    
 }
