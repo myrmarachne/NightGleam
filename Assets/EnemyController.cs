@@ -38,10 +38,10 @@ public class EnemyController : PhysicsObject {
          * TODO: Stworzyć ogólny 'game controller' */
 
         if (collision.collider.name == "Player") {
-            PlayerController playerController = FindObjectOfType<PlayerController>();
-            playerController.lifes--;
-            if (playerController.lifes == 0) {
-                Debug.Log("Game Over");
+            
+            GameController.gameController.lifes--;
+            if (GameController.gameController.lifes == 0) {
+                GameController.gameController.PlayerDeath();
             }
 
         }
