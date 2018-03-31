@@ -11,7 +11,6 @@ public class EnemyController : PhysicsObject {
     protected override void ComputeVelocity() {
         if (grounded) {
             move = new Vector2(sign * groundNormal.y, groundNormal.x);
-            Debug.Log(sign);
         }
         targetVelocity = move * speed;
     }
@@ -27,7 +26,24 @@ public class EnemyController : PhysicsObject {
         
         if (collider.name == "npc_bound") {
             sign = sign * (-1f);
-            Debug.Log("hello");
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+
+        /* TODO: Parametr lifes z PlayerController możnaby wydzielić poza
+         * ten obiekt, gdzieś na zewnątrz np do jakiegos game controllera,
+         * gdzie bylaby informacja o poziomie itp
+         * 
+         * TODO: Stworzyć ogólny 'game controller' */
+
+        if (collision.collider.name == "Player") {
+            PlayerController playerController = FindObjectOfType<PlayerController>();
+            playerController.lifes--;
+            if (playerController.lifes == 0) {
+                Debug.Log("Game Over");
+            }
+
         }
     }
 }
