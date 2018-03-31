@@ -9,7 +9,8 @@ public class PlayerController : PhysicsObject {
 
     public bool changeCamera;
 
-	void Start () {
+	protected override void Start () {
+        base.Start();
         changeCamera = false;
 	}
 

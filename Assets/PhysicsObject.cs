@@ -26,7 +26,7 @@ public class PhysicsObject : MonoBehaviour {
         rbody = GetComponent<Rigidbody2D>();
     }
 
-    void Start () {
+    protected virtual void Start () {
         contactFilter.useTriggers = false;
         contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         contactFilter.useLayerMask = true;
