@@ -26,7 +26,17 @@ public class GameController : MonoBehaviour {
     public void PlayerDeath() {
 
         Debug.Log("GAME OVER");
-        gameOver = true;
+        gameController.gameOver = true;
 
+    }
+
+    public void LifeChange(int n) {
+        gameController.lifes += n;
+
+        if (gameController.lifes == 0) {
+           gameController.PlayerDeath();
+        }
+
+        Debug.Log("Lifes " + lifes.ToString());
     }
 }

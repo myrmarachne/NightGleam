@@ -38,11 +38,9 @@ public class EnemyController : PhysicsObject {
          * TODO: Stworzyć ogólny 'game controller' */
 
         if (collision.collider.name == "Player") {
+
+            GameController.gameController.LifeChange(-1);
             
-            GameController.gameController.lifes--;
-            if (GameController.gameController.lifes == 0) {
-                GameController.gameController.PlayerDeath();
-            }
 
         }
     }
