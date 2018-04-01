@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PhysicsObject : MonoBehaviour {
 
-    public float gravityFactor = 1f;
+    public float gravityFactor = 4f;
     public float minimumGroundNormalY = 0.65f;
 
     protected Rigidbody2D rbody;
@@ -50,8 +49,9 @@ public class PhysicsObject : MonoBehaviour {
 
         velocity = velocity + gravityFactor * Physics2D.gravity * Time.deltaTime;
 
-        // Add the horinzontal velocity from the incoming input
+        // Add the velocity from the incoming input
         velocity.x = targetVelocity.x;
+		velocity.y += targetVelocity.y;
 
         // The position change of the object
         Vector2 deltaPosition = velocity * Time.deltaTime;
