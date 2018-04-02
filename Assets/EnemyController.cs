@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : PhysicsObject {
 
     public float speed = 10f;
+    private Game game = Game.GetInstance();
     private Vector2 move;
     private float sign;
     
@@ -39,8 +40,7 @@ public class EnemyController : PhysicsObject {
 
         if (collision.collider.name == "Player") {
 
-            GameController.gameController.LifeChange(-1);
-            
+            game.Player.Lifes--;
 
         }
     }
