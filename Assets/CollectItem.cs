@@ -3,13 +3,15 @@
 public class CollectItem : MonoBehaviour {
 
     public float loseProbability = 0.4f;
+    private Game game = Game.GetInstance();
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D collider) {
 
-        if (collision.GetComponent<Collider2D>().name == "Player") {
+        if (collider.name == "Player") {
             /* Change the amount of life of the Player after collecting
              * the Elixir */
-            GameController.gameController.LifeChange(ElixirImpact());
+
+            game.Player.Lifes += ElixirImpact();
             this.gameObject.SetActive(false);
             Destroy(this);
         }
