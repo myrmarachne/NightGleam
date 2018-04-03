@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class PlayerController : PhysicsObject {
 
-    private float jumpTakeOffSpeed = 5;
-    private float maxSpeed = 7;
-	private float halfJumpThreshold = 4;
+    private float jumpTakeOffSpeed = 4;
+    private float maxSpeed = 5.5f;
+	private float halfJumpThreshold = 3;
     private Player player = Game.GetInstance().Player;
 
     public bool changeCamera;

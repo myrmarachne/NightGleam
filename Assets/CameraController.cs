@@ -43,7 +43,9 @@ public class CameraController : MonoBehaviour {
 
             camera.x = playerController.gameObject.transform.position.x + offset.x;
             camera.z = transform.position.z;
-            camera.y = transform.position.y;
+            // camera.y = transform.position.y;
+            camera.y = playerController.gameObject.transform.position.y + offset.y;
+
         }
 
         transform.position = camera;
