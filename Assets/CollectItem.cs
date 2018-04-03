@@ -2,7 +2,7 @@
 
 public class CollectItem : MonoBehaviour {
 
-    public float loseProbability = 0.4f;
+    private float loseProbability = 0.4f;
     private Game game = Game.GetInstance();
 
     private void OnTriggerEnter2D(Collider2D collider) {

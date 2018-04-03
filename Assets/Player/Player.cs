@@ -1,4 +1,5 @@
 ﻿public class Player {
+
     public int Lifes;
 	public JumpType Jump;
 

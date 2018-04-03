@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class PhysicsObject : MonoBehaviour {
 
-    public float gravityFactor = 4f;
-    public float minimumGroundNormalY = 0.65f;
+    protected float gravityFactor = 1f;
+
+    protected float minimumGroundNormalY = 0.65f;
 
     protected Rigidbody2D rbody;
         

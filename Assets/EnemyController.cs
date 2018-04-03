@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : PhysicsObject {
 
-    public float speed = 10f;
+    private float speed = 10f;
     private Game game = Game.GetInstance();
     private Vector2 move;
     private float sign;
