@@ -10,12 +10,17 @@ public class PlayerController : PhysicsObject {
 
     public bool changeCamera;
 
+    public GameObject spell;
+    Transform spellPosition;
+    private Vector2 spellVelocity = new Vector2(2,3);
 
     private bool playerTurnedRight = true;
 
 	protected override void Start () {
         base.Start();
         changeCamera = false;
+
+        spellPosition = transform.Find("spellPosition");
 	}
 		
     protected override void ComputeVelocity() {
@@ -42,6 +47,10 @@ public class PlayerController : PhysicsObject {
             Turn();
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftControl)) {
+            CastSpell();
+        }
+
     }
 
     private void Turn() {
@@ -52,6 +61,18 @@ public class PlayerController : PhysicsObject {
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+    }
+
+    private void CastSpell() {
+        SpellController castedSpell = Instantiate(spell, spellPosition.position, Quaternion.identity).GetComponent<SpellController>();
+
+        Vector2 initialVelocity = spellVelocity;
+        if (!playerTurnedRight) {
+            initialVelocity.x *= (-1);
+        }
+
+        castedSpell.Initialize(initialVelocity);
+
     }
 
     void OnTriggerExit2D(Collider2D collider) {

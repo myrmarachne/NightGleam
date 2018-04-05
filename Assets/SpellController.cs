@@ -5,10 +5,10 @@ using UnityEngine;
 public class SpellController : MonoBehaviour {
 
     /* Założenia:
-     * (1) powinna isntniec maxymalna liczba odbic (ew timeout), po ktorych pileczka sie wypala
-     * (3) po uderzeniu w podloge (sufit) sie odbija, ale po uderzeniu w sciane dobrze, jakby sie nie odbijala, a znikała -> osobny poziom colliderów na sciany (?)
-     * (1) maxymalne bounciness + ograniczenia na velocity wzdluz x oraz wzdluz y
-     * (2) "wyskok" zaklecia - z wysokosci playera (wziac pod uwage np przy wyskoku itp)
+     * (1) powinna isntniec maxymalna liczba odbic (ew timeout), po ktorych pileczka sie wypala +
+     * (3) po uderzeniu w podloge (sufit) sie odbija, ale po uderzeniu w sciane dobrze, jakby sie nie odbijala, a znikała -> osobny poziom colliderów na sciany (?) +
+     * (1) maxymalne bounciness + ograniczenia na velocity wzdluz x oraz wzdluz y +
+     * (2) "wyskok" zaklecia - z wysokosci playera (wziac pod uwage np przy wyskoku itp) +
      * 
      * niech tuz przed kolizja z ziemia - stala szybkosc
      */
@@ -26,20 +26,18 @@ public class SpellController : MonoBehaviour {
 
     private Vector2 velocity;
     Rigidbody2D rbody;
-    SpriteRenderer renderer;
+    SpriteRenderer spriteRenderer;
 
     private void Awake() {
-        velocity = new Vector2(2, 3);
+        velocity = Vector2.zero;
         groundCollisionsCounter = 0;
 
-        renderer = GetComponent<SpriteRenderer>();
-        Color textureColor = renderer.color;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        Color textureColor = spriteRenderer.color;
         textureColor.a = 1f;
-        renderer.color = textureColor;
+        spriteRenderer.color = textureColor;
 
         rbody = GetComponent<Rigidbody2D>();
-        rbody.velocity = velocity;
-
 
     }
 
@@ -49,17 +47,24 @@ public class SpellController : MonoBehaviour {
 	}
 
     private void Update () {
+
 	}
 
     private void FixedUpdate() {
-        Color textureColor = renderer.color;
+        Color textureColor = spriteRenderer.color;
         textureColor.a -= (Time.deltaTime/maxSeconds);
-        renderer.color = textureColor;
+        spriteRenderer.color = textureColor;
 
         if (textureColor.a <= 0f) {
             this.gameObject.SetActive(false);
             Destroy(this);
         }
+    }
+
+    public void Initialize(Vector2 velocity) {
+        this.velocity = velocity;
+        rbody.velocity = this.velocity;
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -68,21 +73,6 @@ public class SpellController : MonoBehaviour {
             /* Set velocity before collision with the floor */
             rbody.velocity = velocity;
 
-          //  groundCollisionsCounter++;
-
-            /* Make the bullet more transparent in each of the collision
-             * with the ground */
-
-           // Color textureColor = renderer.color;
-           // textureColor.a -= (1f / maxGroundCollisions);
-            //renderer.color = textureColor;
-
-
-          //  if (groundCollisionsCounter >= maxGroundCollisions) {
-            //    startVanishing = true;
-           //     this.gameObject.SetActive(false);
-           //     Destroy(this);
-          //  }
         } else {
             /*
              * TODO: Handle collision with enemies             
