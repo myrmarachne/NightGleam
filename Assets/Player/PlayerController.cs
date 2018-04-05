@@ -10,6 +10,9 @@ public class PlayerController : PhysicsObject {
 
     public bool changeCamera;
 
+
+    private bool playerTurnedRight = true;
+
 	protected override void Start () {
         base.Start();
         changeCamera = false;
@@ -30,6 +33,25 @@ public class PlayerController : PhysicsObject {
 		targetVelocity.x = Input.GetAxis("Horizontal") * maxSpeed;
 
 		handleJump();
+
+        if ((targetVelocity.x > 0 && !playerTurnedRight) || (targetVelocity.x < 0 && playerTurnedRight)){
+            /* Character is moving to right, while standing
+             * turned to left or is moving to left, while
+             * standing turned to right -> turn to the opposite 
+             * direction */
+            Turn();
+        }
+
+    }
+
+    private void Turn() {
+        /* Change the direction the player is currently facing */
+        playerTurnedRight = !playerTurnedRight;
+
+        /* Turn the player */
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
     }
 
     void OnTriggerExit2D(Collider2D collider) {
