@@ -8,26 +8,22 @@ public class SpellController : MonoBehaviour {
      * ustalić szybkości pocisku tak, aby mógł przeskoczyć NPC
      */
 
-    private float maxVelocityX = 1;
-    private float maxVelocityY = 1;
-
-    private float collisionPadding = 0.01f;
-    private int groundCollisionsCounter;
-    private int maxGroundCollisions = 5;
-
     private float maxSeconds = 5f;
-
-    private bool startVanishing;
 
     private Vector2 velocity;
     Rigidbody2D rbody;
     SpriteRenderer spriteRenderer;
 
+    private Light spellLight;
+
     private void Awake() {
         velocity = Vector2.zero;
-        groundCollisionsCounter = 0;
+
+        spellLight = GetComponent<Light>();
+        spellLight.range = 0.5f;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+
         Color textureColor = spriteRenderer.color;
         textureColor.a = 1f;
         spriteRenderer.color = textureColor;
@@ -37,7 +33,6 @@ public class SpellController : MonoBehaviour {
     }
 
     private void Start () {
-        
 
 	}
 
@@ -50,9 +45,11 @@ public class SpellController : MonoBehaviour {
         textureColor.a -= (Time.deltaTime/maxSeconds);
         spriteRenderer.color = textureColor;
 
+        spellLight.range -= (Time.deltaTime / (2*maxSeconds));
+
+
         if (textureColor.a <= 0f) {
-            this.gameObject.SetActive(false);
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 
@@ -72,8 +69,8 @@ public class SpellController : MonoBehaviour {
             
             /* Handle collision with Enemies */
 
-
             Destroy(this.gameObject);
+            
 
         } else {
 
