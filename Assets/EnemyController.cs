@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : PhysicsObject {
 
-    private float speed = 10f;
+    private float speed = 4f;
     private Game game = Game.GetInstance();
     private Vector2 move;
     private float sign;
@@ -32,16 +32,11 @@ public class EnemyController : PhysicsObject {
 
     private void OnCollisionEnter2D(Collision2D collision) {
 
-        /* TODO: Parametr lifes z PlayerController możnaby wydzielić poza
-         * ten obiekt, gdzieś na zewnątrz np do jakiegos game controllera,
-         * gdzie bylaby informacja o poziomie itp
-         * 
-         * TODO: Stworzyć ogólny 'game controller' */
-
         if (collision.collider.name == "Player") {
-
             game.Player.Lifes--;
-
+        } else if (collision.collider.name == "Spell(Clone)") {
+            Destroy(this.gameObject);
         }
+
     }
 }

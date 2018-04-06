@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class SpellController : MonoBehaviour {
 
-    /* Założenia:
-     * (1) powinna isntniec maxymalna liczba odbic (ew timeout), po ktorych pileczka sie wypala +
-     * (3) po uderzeniu w podloge (sufit) sie odbija, ale po uderzeniu w sciane dobrze, jakby sie nie odbijala, a znikała -> osobny poziom colliderów na sciany (?) +
-     * (1) maxymalne bounciness + ograniczenia na velocity wzdluz x oraz wzdluz y +
-     * (2) "wyskok" zaklecia - z wysokosci playera (wziac pod uwage np przy wyskoku itp) +
-     * 
-     * niech tuz przed kolizja z ziemia - stala szybkosc
+    /* TODO:
+     * ustalić szybkości pocisku tak, aby mógł przeskoczyć NPC
      */
 
     private float maxVelocityX = 1;
@@ -68,17 +63,52 @@ public class SpellController : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
+        /* The light is being anihilated while falling on Platforms
+         * or while falling on the ground, when the normal vector to
+         * the sorface is either horizontal or vertical, but pointing "down"
+         * */
 
-        if (collision.collider.name == "Ground") {
-            /* Set velocity before collision with the floor */
-            rbody.velocity = velocity;
+        if (collision.collider.name != "Ground") {
+            
+            /* Handle collision with Enemies */
+
+
+            Destroy(this.gameObject);
 
         } else {
-            /*
-             * TODO: Handle collision with enemies             
-             */
-            this.gameObject.SetActive(false);
-            Destroy(this);
+
+            /* Check the normal vector to the surface */
+            ContactPoint2D[] contactPoints = new ContactPoint2D[16];
+            int numberOfContactPoints = collision.GetContacts(contactPoints);
+
+            bool anihilate = false;
+            Vector2 normal = Vector2.zero;
+
+            for (int i = 0; i < numberOfContactPoints; i++) {
+                normal = contactPoints[i].normal;
+
+                /* Check if the normal vector is horizontal */
+                if (normal.y == 0 && normal.x != 0) {
+                    anihilate = true;
+                    break;
+                }
+                /* Check if the normal vector is a vertical vector
+                 * pointing to ground [down] */
+                else if (normal.y < 0 && normal.x == 0) {
+                    anihilate = true;
+                    break;
+                }
+            }
+
+           
+            if (anihilate) {
+                Destroy(this.gameObject);
+            } else {
+                /* Set velocity before collision with the floor */
+                rbody.velocity = velocity;
+            }
+
+            
         }
     }
 
