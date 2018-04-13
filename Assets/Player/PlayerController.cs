@@ -2,14 +2,12 @@
 using UnityEngine;
 
 public class PlayerController : PhysicsObject {
+    private const float JUMP_TAKE_OFF_SPEED = 8;
+    private const float MAX_SPEED = 7;
 
-    private float jumpTakeOffSpeed = 4;
-    private float maxSpeed = 5.5f;
-	private float halfJumpThreshold = 3;
+	public bool changeCamera;
+	private JumpType jumpType;
     private Player player = Game.GetInstance().Player;
-
-    public bool changeCamera;
-
     public GameObject spell;
     Transform spellPosition;
     private Vector2 spellVelocity = new Vector2(2,3);
@@ -24,22 +22,11 @@ public class PlayerController : PhysicsObject {
 	}
 		
     protected override void ComputeVelocity() {
-
-        /* The purpose of this function is to check
-         * for incoming inputs and compute based on them
-         * update the value of the targetVelocity of the 
-         * main character */
-
-		targetVelocity = Vector2.zero;
-
-        /* Get the value of horizontal movement 
-         * movement.x value is in range [-1, 1] */
-
-		targetVelocity.x = Input.GetAxis("Horizontal") * maxSpeed;
-
+		float xVelocityDelta = -rbody.velocity.x + Input.GetAxis("Horizontal") * MAX_SPEED;
+		rbody.velocity += new Vector2(xVelocityDelta, 0);
 		handleJump();
 
-        if ((targetVelocity.x > 0 && !playerTurnedRight) || (targetVelocity.x < 0 && playerTurnedRight)){
+        if ((rbody.velocity.x > 0 && !playerTurnedRight) || (rbody.velocity.x < 0 && playerTurnedRight)){
             /* Character is moving to right, while standing
              * turned to left or is moving to left, while
              * standing turned to right -> turn to the opposite 
@@ -81,36 +68,15 @@ public class PlayerController : PhysicsObject {
     }
 
 	private void handleJump() {
-		// End of the jump detected
-		if (player.Jump != JumpType.NoJump && grounded) {
-			player.Jump = JumpType.NoJump;
-		}
-
-		if (Input.GetButtonDown("Jump") || (Input.GetButton("Jump") && grounded)) {
-			// "Jump" button was pressed while grounded - start jump
-			if (grounded) {
-				player.Jump = JumpType.Normal;
-				targetVelocity.y = jumpTakeOffSpeed;
+		if (Input.GetButtonDown("Jump")) {
+			if (IsGrounded()) {
+				jumpType = JumpType.Normal;
+				rbody.AddForce(new Vector2(0, JUMP_TAKE_OFF_SPEED), ForceMode2D.Impulse);
 			}
-			// "Jump" was pressed in the second part of the earlier jump - trigger double jump
-			else if (Math.Abs(velocity.y) <= halfJumpThreshold && player.Jump == JumpType.Normal) {
-				player.Jump = JumpType.Double;
-				targetVelocity.y = jumpTakeOffSpeed;
-				if (velocity.y < 0) {
-					targetVelocity.y -= velocity.y;
-				}
+			else if (jumpType == JumpType.Normal) {
+				jumpType = JumpType.Double;
+				rbody.AddForce(new Vector2(0, JUMP_TAKE_OFF_SPEED), ForceMode2D.Impulse);
 			}
-		}
-		// "Jump"" button released
-		else if (Input.GetButtonUp("Jump")) {
-			// Recognize half jump
-			if (velocity.y > 0 && velocity.y > halfJumpThreshold && player.Jump == JumpType.Normal) {
-				player.Jump = JumpType.Half;
-			}
-		}
-		// If half jump and player already passed upper limit of the jump half - get him down.
-		if (player.Jump == JumpType.Half && velocity.y > 0 && velocity.y <= halfJumpThreshold) {
-			targetVelocity.y = -velocity.y * .5f;
 		}
 	}
 }
