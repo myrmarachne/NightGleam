@@ -3,28 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : PhysicsObject {
+    private const float SPEED = 1.5f;
 
-    private float speed = 4f;
     private Game game = Game.GetInstance();
-    private Vector2 move;
     private float sign;
+
+	protected override void Start() {
+		base.Start();
+		sign = 1f;
+	}
     
     protected override void ComputeVelocity() {
-        if (grounded) {
-            move = new Vector2(sign * groundNormal.y, groundNormal.x);
-        }
-        targetVelocity = move * speed;
+		float xVelocityDelta = -rbody.velocity.x;
+		if (IsGrounded()) {
+			xVelocityDelta += SPEED * sign;
+		}
+		rbody.velocity += new Vector2(xVelocityDelta, 0);
     }
-
-    protected override void Start() {
-        base.Start();
-        move = Vector2.zero;
-        sign = 1f;
-    }
-
 
     protected void OnTriggerEnter2D(Collider2D collider) {
-        
         if (collider.name == "npc_bound") {
             sign = sign * (-1f);
         }
