@@ -12,8 +12,7 @@ public class CollectItem : MonoBehaviour {
              * the Elixir */
 
             game.Player.Lifes += ElixirImpact();
-            this.gameObject.SetActive(false);
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 
