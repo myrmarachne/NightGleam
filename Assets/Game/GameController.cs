@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class GameController : MonoBehaviour {
-    public Game game = Game.GetInstance();
+    private Game game = Game.GetInstance();
 	
 	void Update () {
         if (game.State == GameState.Playing && game.Player.Lifes == 0) {

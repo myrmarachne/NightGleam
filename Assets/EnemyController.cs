@@ -3,28 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : PhysicsObject {
+    private const float SPEED = 1.5f;
 
-    public float speed = 10f;
     private Game game = Game.GetInstance();
-    private Vector2 move;
     private float sign;
+
+	protected override void Start() {
+		base.Start();
+		sign = 1f;
+	}
     
     protected override void ComputeVelocity() {
-        if (grounded) {
-            move = new Vector2(sign * groundNormal.y, groundNormal.x);
-        }
-        targetVelocity = move * speed;
+		float xVelocityDelta = -rbody.velocity.x;
+		if (IsGrounded()) {
+			xVelocityDelta += SPEED * sign;
+		}
+		rbody.velocity += new Vector2(xVelocityDelta, 0);
     }
-
-    protected override void Start() {
-        base.Start();
-        move = Vector2.zero;
-        sign = 1f;
-    }
-
 
     protected void OnTriggerEnter2D(Collider2D collider) {
-        
         if (collider.name == "npc_bound") {
             sign = sign * (-1f);
         }
@@ -32,16 +29,11 @@ public class EnemyController : PhysicsObject {
 
     private void OnCollisionEnter2D(Collision2D collision) {
 
-        /* TODO: Parametr lifes z PlayerController możnaby wydzielić poza
-         * ten obiekt, gdzieś na zewnątrz np do jakiegos game controllera,
-         * gdzie bylaby informacja o poziomie itp
-         * 
-         * TODO: Stworzyć ogólny 'game controller' */
-
         if (collision.collider.name == "Player") {
-            
             game.Player.Lifes--;
-
+        } else if (collision.collider.name == "Spell(Clone)") {
+            Destroy(this.gameObject);
         }
+
     }
 }
