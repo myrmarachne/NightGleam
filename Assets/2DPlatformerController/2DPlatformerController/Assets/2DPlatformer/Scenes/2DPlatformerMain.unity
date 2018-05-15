@@ -7931,7 +7931,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.953125
+  orthographic size: 3.0546875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -36098,7 +36098,7 @@ GameObject:
   - component: {fileID: 2046297930}
   - component: {fileID: 2046297933}
   - component: {fileID: 2046297932}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Elixir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36158,7 +36158,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2046297929}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.9289997, y: 3.2099998, z: -0.015625}
+  m_LocalPosition: {x: 26.64, y: -3.1, z: -0.015625}
   m_LocalScale: {x: 2.0207076, y: 1.9429481, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
