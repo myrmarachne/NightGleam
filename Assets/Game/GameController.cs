@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
-
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
     private Game game = Game.GetInstance();
@@ -15,8 +14,7 @@ public class GameController : MonoBehaviour {
             Debug.Log("GAME OVER");
         }
 		if (Input.GetKey("escape")) {
-			Debug.Log("QUIT");
-			Application.Quit();
+			SceneManager.LoadScene ("PauseMenu");
 		}
 	}
 }
