@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class PlayerController : PhysicsObject {
-    private const float JUMP_TAKE_OFF_SPEED = 8;
+    private const float JUMP_TAKE_OFF_SPEED = 10;
     private const float MAX_SPEED = 7;
 
 	public bool changeCamera;
@@ -69,14 +69,25 @@ public class PlayerController : PhysicsObject {
 
 	private void handleJump() {
 		if (Input.GetButtonDown("Jump")) {
+			float vy = rbody.velocity.y;
 			if (IsGrounded()) {
 				jumpType = JumpType.Normal;
 				rbody.AddForce(new Vector2(0, JUMP_TAKE_OFF_SPEED), ForceMode2D.Impulse);
 			}
-			else if (jumpType == JumpType.Normal) {
+			else if (jumpType == JumpType.Normal && vy > 0) {
 				jumpType = JumpType.Double;
-				rbody.AddForce(new Vector2(0, JUMP_TAKE_OFF_SPEED), ForceMode2D.Impulse);
+				// max +3 tiles, so double jump == 9 tiles high
+				rbody.AddForce(new Vector2(0, JUMP_TAKE_OFF_SPEED * 0.3f), ForceMode2D.Impulse);
 			}
 		}
+	}
+
+	protected Boolean IsGrounded() {
+		// if player moves vertically, then it cannot be grounded
+		// (warning: it will not work with fast vertically moving platforms)
+		if (Math.Abs(rbody.velocity.y) > 1) {
+			return false;
+		}
+		return base.IsGrounded ();
 	}
 }
