@@ -5,20 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour {
 	public Button StartGameButton, QuitButton;
-	protected virtual void Start() {
-		StartGameButton.onClick.AddListener (startGame);
-		QuitButton.onClick.AddListener (quit);
-	}
 
-	private void startGame() {
-		SceneManager.LoadScene ("2DPlatformerMain");
-	}
+	private GameController gameController = GameController.instance; //???
 
-	private void quit() {
-#if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
-#else
-		Application.Quit ();
-#endif
+
+	protected void Awake() {
+		
+		QuitButton.onClick.AddListener (gameController.Quit);
+		StartGameButton.onClick.AddListener (gameController.StartGame);
+
 	}
+		
+		
 }

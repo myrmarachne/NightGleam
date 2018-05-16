@@ -3,17 +3,40 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour {
-	public Button ContinueButton, MainMenuButton;
+
+	public Transform pauseMenuCanvas;
+
+	private Game game = Game.GetInstance();
+
 	protected virtual void Start() {
-		ContinueButton.onClick.AddListener (continueGame);
-		MainMenuButton.onClick.AddListener (mainMenu);
+		if (pauseMenuCanvas.gameObject.activeInHierarchy) {
+			pauseMenuCanvas.gameObject.SetActive (false);
+		}
+
 	}
 
-	private void mainMenu() {
-		SceneManager.LoadScene ("MainMenu");
+	protected virtual void Update(){
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			if (game.State == GameState.Playing) 
+				Pause ();
+			 else if (game.State == GameState.Paused)
+				Continue ();
+		}
 	}
 
-	private void continueGame() {
-		SceneManager.LoadScene ("2DPlatformerMain");
+	private void Pause(){
+		game.State = GameState.Paused;
+		pauseMenuCanvas.gameObject.SetActive (true);
+		Time.timeScale = 0;
+
 	}
+
+	public void Continue(){
+		game.State = GameState.Playing;
+		pauseMenuCanvas.gameObject.SetActive (false);
+		Time.timeScale = 1;
+	}
+
+
+
 }

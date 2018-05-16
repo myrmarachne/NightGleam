@@ -2,17 +2,23 @@
 using UnityEngine;
 
 public class PlayerController : PhysicsObject {
+
+	private Player player = Game.GetInstance().Player;
+
+	/* Player speed */
     private const float JUMP_TAKE_OFF_SPEED = 10;
     private const float MAX_SPEED = 7;
-
-	public bool changeCamera;
 	private JumpType jumpType;
-    private Player player = Game.GetInstance().Player;
-    public GameObject spell;
+
+	/* Player position */
+	private bool playerTurnedRight = true;
+	    
+	/* Spell obects parameters */
+	public GameObject spell;
     Transform spellPosition;
     private Vector2 spellVelocity = new Vector2(2,3);
 
-    private bool playerTurnedRight = true;
+	public bool changeCamera;
 
 	protected override void Start () {
         base.Start();
