@@ -2,19 +2,11 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class MainMenuController : MonoBehaviour {
 	public Button StartGameButton, QuitButton;
 
-	private GameController gameController = GameController.instance; //???
-
-
-	protected void Awake() {
-		
-		QuitButton.onClick.AddListener (gameController.Quit);
-		StartGameButton.onClick.AddListener (gameController.StartGame);
-
+	protected void Start() {
+		QuitButton.onClick.AddListener (GameManager.QuitGame);
+		StartGameButton.onClick.AddListener (GameManager.StartGame);
 	}
-		
-		
 }

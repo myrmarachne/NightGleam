@@ -2,6 +2,7 @@
     private static Game game = null;
 
     public GameState State;
+	public int Level;
     private Player player;
 
     public Player Player {
@@ -24,5 +25,6 @@
     public void Reset() {
         State = GameState.Playing;
         player = new Player();
+		Level = 1;
     }
 }
