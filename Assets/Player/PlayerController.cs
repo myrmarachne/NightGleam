@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerController : PhysicsObject {
 
-	private Player player = Game.GetInstance().Player;
-
 	/* Player speed */
     private const float JUMP_TAKE_OFF_SPEED = 10;
     private const float MAX_SPEED = 7;
@@ -16,7 +14,7 @@ public class PlayerController : PhysicsObject {
 	/* Spell obects parameters */
 	public GameObject spell;
     Transform spellPosition;
-    private Vector2 spellVelocity = new Vector2(2,3);
+    private Vector2 spellVelocity = new Vector2(6,4);
 
 	public bool changeCamera;
 
