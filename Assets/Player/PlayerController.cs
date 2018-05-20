@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerController : PhysicsObject {
 
+	private Game game = Game.GetInstance();
+
 	/* Player speed */
     private const float JUMP_TAKE_OFF_SPEED = 10;
     private const float MAX_SPEED = 7;
@@ -14,7 +16,7 @@ public class PlayerController : PhysicsObject {
 	/* Spell obects parameters */
 	public GameObject spell;
     Transform spellPosition;
-    private Vector2 spellVelocity = new Vector2(6,4);
+    private Vector2 spellVelocity = new Vector2(6,9);
 
 	public bool changeCamera;
 
@@ -71,6 +73,12 @@ public class PlayerController : PhysicsObject {
             changeCamera = true;
     }
 
+	void OnTriggerEnter2D(Collider2D collider) {
+		if (collider.gameObject.name == "Elixir") {
+			game.Player.setLifes(game.Player.getLifes() + Item.ElixirImpact ());
+		}
+	}
+
 	private void handleJump() {
 		if (Input.GetButtonDown("Jump")) {
 			float vy = rbody.velocity.y;
@@ -93,5 +101,12 @@ public class PlayerController : PhysicsObject {
 			return false;
 		}
 		return base.IsGrounded ();
+	}
+
+	private void OnCollisionEnter2D (Collision2D collision){
+		if (collision.collider.name == "NPC") {
+			game.Player.setLifes(game.Player.getLifes() - 1.0f);
+			// TODO 
+		}
 	}
 }

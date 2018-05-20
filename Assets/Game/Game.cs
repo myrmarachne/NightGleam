@@ -1,9 +1,15 @@
-﻿public class Game {
+﻿using System;
+using UnityEngine;
+
+public class Game {
     private static Game game = null;
 
     public GameState State;
 	public int Level;
+	public float maxLifes;
+
     private Player player;
+
 
     public Player Player {
         get {
@@ -18,13 +24,15 @@
         return game;
     }
 
-    private Game() {
-        Reset();
+	private Game() {
+		Reset();
     }
 
-    public void Reset() {
+	public void Reset() {
         State = GameState.Playing;
-        player = new Player();
+		player = new Player(maxLifes);
 		Level = 1;
     }
+
+
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class GameManager {
 	private static Game game = Game.GetInstance();
@@ -10,6 +11,8 @@ public class GameManager {
 	}
 
 	public static void StartGame() {
+		
+		game.maxLifes = 3.0f;
 		game.Reset ();
 		GoToNthLevel (1);
 	}
@@ -25,6 +28,7 @@ public class GameManager {
 	public static void GoToNthLevel(int n) {
 		game.Level = n;
 		//TODO handle nth level
+
 		SceneManager.LoadScene ("2DPlatformerMain");
 	}
 }

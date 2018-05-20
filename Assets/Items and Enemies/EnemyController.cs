@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : PhysicsObject {
+	
     private const float SPEED = 1.5f;
-
-    private Game game = Game.GetInstance();
-    private float sign;
+	private float sign;
 
 	protected override void Start() {
 		base.Start();
@@ -29,9 +28,7 @@ public class EnemyController : PhysicsObject {
 
     private void OnCollisionEnter2D(Collision2D collision) {
 
-        if (collision.collider.name == "Player") {
-            game.Player.Lifes--;
-        } else if (collision.collider.name == "Spell(Clone)") {
+        if (collision.collider.name == "Spell(Clone)") {
             Destroy(this.gameObject);
         }
 
