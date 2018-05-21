@@ -10,6 +10,8 @@ public class LevelController : MonoBehaviour {
 	protected void Start() {
 		game.State = GameState.Playing;
 		lifes = game.Player.getLifes();
+
+		Physics2D.IgnoreLayerCollision (8, 9, false);
 	}
 
 	void Update () {

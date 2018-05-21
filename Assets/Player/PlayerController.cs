@@ -18,7 +18,28 @@ public class PlayerController : PhysicsObject {
     Transform spellPosition;
     private Vector2 spellVelocity = new Vector2(6,9);
 
+	/* After collision with NPC */
+	private float stopTime = 0.1f;
+	private float blinkingTime = 2.0f;
+
+	private float stopTimeLeft;
+	private float blinkingTimeLeft;
+
+	private float currentBlink;
+
+	SpriteRenderer spriteRenderer;
+
 	public bool changeCamera;
+
+	protected void Awake(){
+		Physics2D.IgnoreLayerCollision (8, 9, false);
+
+		spriteRenderer = GetComponent<SpriteRenderer>();
+
+		Color textureColor = spriteRenderer.color;
+		textureColor.a = 1f;
+		spriteRenderer.color = textureColor;
+	}
 
 	protected override void Start () {
         base.Start();
@@ -26,7 +47,43 @@ public class PlayerController : PhysicsObject {
 
         spellPosition = transform.Find("spellPosition");
 	}
+
+	protected override void Update(){
 		
+		if (stopTimeLeft <= 0) {
+			base.Update ();
+
+		} else {
+			stopTimeLeft -= Time.deltaTime;
+		}
+
+		if (blinkingTimeLeft > 0) {
+
+			blinkingTimeLeft -= Time.deltaTime;
+			currentBlink += Time.deltaTime; 
+
+			if (currentBlink > 0.3f) {
+				currentBlink = 0;
+
+				Color textureColor = spriteRenderer.color;
+				textureColor.a *= -1;
+				textureColor.a += 1.5f;
+				spriteRenderer.color = textureColor;
+			}
+
+			if (blinkingTimeLeft <= 0) {
+				Physics2D.IgnoreLayerCollision (8, 9, false);
+
+				Color textureColor = spriteRenderer.color;
+				textureColor.a = 1f;
+				spriteRenderer.color = textureColor;
+			}
+
+		}
+
+	}
+
+
     protected override void ComputeVelocity() {
 		float xVelocityDelta = -rbody.velocity.x + Input.GetAxis("Horizontal") * MAX_SPEED;
 		rbody.velocity += new Vector2(xVelocityDelta, 0);
@@ -56,29 +113,6 @@ public class PlayerController : PhysicsObject {
         transform.localScale = scale;
     }
 
-    private void CastSpell() {
-        SpellController castedSpell = Instantiate(spell, spellPosition.position, Quaternion.identity).GetComponent<SpellController>();
-
-        Vector2 initialVelocity = spellVelocity;
-        if (!playerTurnedRight) {
-            initialVelocity.x *= (-1);
-        }
-
-        castedSpell.Initialize(initialVelocity);
-
-    }
-
-    void OnTriggerExit2D(Collider2D collider) {
-        if (collider.gameObject.name == "FloorChange")
-            changeCamera = true;
-    }
-
-	void OnTriggerEnter2D(Collider2D collider) {
-		if (collider.gameObject.name == "Elixir") {
-			game.Player.setLifes(game.Player.getLifes() + Item.ElixirImpact ());
-		}
-	}
-
 	private void handleJump() {
 		if (Input.GetButtonDown("Jump")) {
 			float vy = rbody.velocity.y;
@@ -103,10 +137,42 @@ public class PlayerController : PhysicsObject {
 		return base.IsGrounded ();
 	}
 
+
+    private void CastSpell() {
+        SpellController castedSpell = Instantiate(spell, spellPosition.position, Quaternion.identity).GetComponent<SpellController>();
+
+        Vector2 initialVelocity = spellVelocity;
+        if (!playerTurnedRight) {
+            initialVelocity.x *= (-1);
+        }
+
+        castedSpell.Initialize(initialVelocity);
+
+    }
+
+    void OnTriggerExit2D(Collider2D collider) {
+        if (collider.gameObject.name == "FloorChange")
+            changeCamera = true;
+    }
+
+	void OnTriggerEnter2D(Collider2D collider) {
+		if (collider.gameObject.name == "Elixir") {
+			game.Player.setLifes(game.Player.getLifes() + Item.ElixirImpact ());
+		}
+	}
+
+
+
 	private void OnCollisionEnter2D (Collision2D collision){
 		if (collision.collider.name == "NPC") {
+			
 			game.Player.setLifes(game.Player.getLifes() - 1.0f);
-			// TODO 
+
+			Physics2D.IgnoreLayerCollision (8, 9, true);
+
+			stopTimeLeft = stopTime;
+			blinkingTimeLeft = blinkingTime;
+			currentBlink = 0;
 		}
 	}
 }
