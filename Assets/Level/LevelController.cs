@@ -12,6 +12,8 @@ public class LevelController : MonoBehaviour {
 		lifes = game.Player.getLifes();
 
 		Physics2D.IgnoreLayerCollision (8, 9, false);
+
+		UpdateLevelIndicator ();
 	}
 
 	void Update () {
@@ -43,16 +45,22 @@ public class LevelController : MonoBehaviour {
 			
 		if (Mathf.Floor (game.Player.getLifes()) != game.Player.getLifes()) {
 			// Color next heart grey
-			colorNthHeart (i, Color.grey);
+			colorNthHeart (i, new Color (1, 1, 1, 0.5f));
 			i++;
 		}
 
 		for (; i <= game.maxLifes; i++) {
-			colorNthHeart (i, Color.black);
+			colorNthHeart (i, new Color (1, 1, 1, 0.15f));
 
 		}
 
 		this.lifes = game.Player.getLifes();
 	}
 
+	private void UpdateLevelIndicator() {
+		GameObject indicator = GameObject.Find ("LevelIndicatorText");
+		if (indicator) {
+			indicator.GetComponent<Text> ().text = "Level " + game.Level;
+		}
+	}
 }

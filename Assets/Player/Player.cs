@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class Player {
 
-    private float lifes;
-	private float maxLifes;
+    private int lifes;
+	private int maxLifes;
 
-	public Player(float maxLifes) {
+	public Player(int maxLifes) {
 		Reset(maxLifes);
     }
 
 
-	public void Reset(float maxLifes) {
+	public void Reset(int maxLifes) {
 		this.lifes = maxLifes;
 		this.maxLifes = maxLifes;
     }
 
-	public void setLifes(float lifes){
+	public void setLifes(int lifes){
 		this.lifes = lifes;
 		if (this.lifes < 0)
 			this.lifes = 0;
@@ -24,7 +24,7 @@ public class Player {
 			this.lifes = this.maxLifes;
 	}
 
-	public float getLifes(){
+	public int getLifes(){
 		return this.lifes;
 	}
 }

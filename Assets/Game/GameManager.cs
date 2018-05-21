@@ -12,7 +12,7 @@ public class GameManager {
 
 	public static void StartGame() {
 		
-		game.maxLifes = 3.0f;
+		game.maxLifes = 6;
 		game.Reset ();
 		GoToNthLevel (1);
 	}
