@@ -147,22 +147,23 @@ public class PlayerController : PhysicsObject {
 	}
 
 
-    private void CastSpell() {
-        SpellController castedSpell = Instantiate(spell, spellPosition.position, Quaternion.identity).GetComponent<SpellController>();
+	private void CastSpell() {
+		if (game.State == GameState.Playing) {
+			SpellController castedSpell = Instantiate (spell, spellPosition.position, Quaternion.identity).GetComponent<SpellController> ();
 
-        Vector2 initialVelocity = spellVelocity;
-        if (!playerTurnedRight) {
-            initialVelocity.x *= (-1);
-        }
+			Vector2 initialVelocity = spellVelocity;
+			if (!playerTurnedRight) {
+				initialVelocity.x *= (-1);
+			}
 
-        castedSpell.Initialize(initialVelocity);
+			castedSpell.Initialize (initialVelocity);
+		}
+	}
 
-    }
-
-    void OnTriggerExit2D(Collider2D collider) {
-        if (collider.gameObject.name == "FloorChange")
-            changeCamera = true;
-    }
+	void OnTriggerExit2D(Collider2D collider) {
+			if (collider.gameObject.name == "FloorChange")
+					changeCamera = true;
+	}
 
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.gameObject.name == "Elixir") {
