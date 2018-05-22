@@ -28,6 +28,7 @@ public class PlayerController : PhysicsObject {
 	private float currentBlink;
 
 	SpriteRenderer spriteRenderer;
+	Animator animator;
 
 	public bool changeCamera;
 
@@ -35,6 +36,7 @@ public class PlayerController : PhysicsObject {
 		Physics2D.IgnoreLayerCollision (8, 9, false);
 
 		spriteRenderer = GetComponent<SpriteRenderer>();
+		animator = GetComponent<Animator> ();
 
 		Color textureColor = spriteRenderer.color;
 		textureColor.a = 1f;
@@ -80,13 +82,18 @@ public class PlayerController : PhysicsObject {
 			}
 
 		}
+	}
 
+	protected void FixedUpdate(){
+		animator.SetFloat ("Velocity", Mathf.Abs (rbody.velocity.x));
+		animator.SetBool ("IsGrounded", IsGrounded ());
 	}
 
 
     protected override void ComputeVelocity() {
 		float xVelocityDelta = -rbody.velocity.x + Input.GetAxis("Horizontal") * MAX_SPEED;
 		rbody.velocity += new Vector2(xVelocityDelta, 0);
+
 		handleJump();
 
         if ((rbody.velocity.x > 0 && !playerTurnedRight) || (rbody.velocity.x < 0 && playerTurnedRight)){
@@ -128,7 +135,7 @@ public class PlayerController : PhysicsObject {
 		}
 	}
 
-	protected Boolean IsGrounded() {
+	protected bool IsGrounded() {
 		// if player moves vertically, then it cannot be grounded
 		// (warning: it will not work with fast vertically moving platforms)
 		if (Math.Abs(rbody.velocity.y) > 1) {
