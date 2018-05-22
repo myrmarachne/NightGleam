@@ -6,7 +6,7 @@ public class Game {
 
     public GameState State;
 	public int Level;
-	public float maxLifes;
+	public int maxLifes;
 
     private Player player;
 

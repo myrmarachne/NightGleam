@@ -24,6 +24,7 @@ public class PlayerController : PhysicsObject {
 
 	private float stopTimeLeft;
 	private float blinkingTimeLeft;
+	private bool ignoreNPCCollisions = false;
 
 	private float currentBlink;
 
@@ -79,6 +80,7 @@ public class PlayerController : PhysicsObject {
 				Color textureColor = spriteRenderer.color;
 				textureColor.a = 1f;
 				spriteRenderer.color = textureColor;
+				ignoreNPCCollisions = false;
 			}
 
 		}
@@ -171,15 +173,16 @@ public class PlayerController : PhysicsObject {
 
 
 	private void OnCollisionEnter2D (Collision2D collision){
-		if (collision.collider.name == "NPC") {
+		if (collision.collider.name == "NPC" && !ignoreNPCCollisions) {
 			
-			game.Player.setLifes(game.Player.getLifes() - 1.0f);
+			game.Player.setLifes(game.Player.getLifes() - 1);
 
 			Physics2D.IgnoreLayerCollision (8, 9, true);
 
 			stopTimeLeft = stopTime;
 			blinkingTimeLeft = blinkingTime;
 			currentBlink = 0;
+			ignoreNPCCollisions = true;
 		}
 	}
 }
