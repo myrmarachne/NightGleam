@@ -23,6 +23,11 @@ public class EnemyController : PhysicsObject {
     protected void OnTriggerEnter2D(Collider2D collider) {
         if (collider.name == "npc_bound") {
             sign = sign * (-1f);
+			// Move element to the opposite direction to avoid collision trigger after element turn
+			transform.position += new Vector3(sign * SPEED, 0, 0);
+			Vector3 scale = transform.localScale;
+			scale.x *= -1;
+			transform.localScale = scale;
         }
     }
 
