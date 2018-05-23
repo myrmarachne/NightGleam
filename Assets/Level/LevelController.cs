@@ -29,7 +29,7 @@ public class LevelController : MonoBehaviour {
 	private void colorNthHeart(int n, Color color){
 		// Change the color of n-th heart to color
 		string heartString = "Life(" + n.ToString() + ")";
-		SpriteRenderer spriteRenderer = GameObject.Find (heartString).GetComponent<SpriteRenderer> ();
+		Image spriteRenderer = GameObject.Find (heartString).GetComponent<Image> ();
 		spriteRenderer.color = color;
 
 	}
