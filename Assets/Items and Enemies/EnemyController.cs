@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : PhysicsObject {
 	
-    private const float SPEED = 1.5f;
+    private const float SPEED = 1.2f;
 	private float sign;
 
 	protected override void Start() {
