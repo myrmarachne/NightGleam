@@ -9,7 +9,7 @@ public class LevelController : MonoBehaviour {
 
 	protected void Start() {
 		game.State = GameState.Playing;
-		lifes = game.Player.getLifes();
+		lifes = game.Player.GetLifes();
 
 		Physics2D.IgnoreLayerCollision (8, 9, false);
 
@@ -17,11 +17,11 @@ public class LevelController : MonoBehaviour {
 	}
 
 	void Update () {
-		if (game.Player.getLifes() != lifes) {
+		if (game.Player.GetLifes() != lifes) {
 			UpdateLifes ();
 		}
 
-		if (game.State == GameState.Playing && game.Player.getLifes() == 0) {
+		if (game.State == GameState.Playing && game.Player.GetLifes() == 0) {
 			game.State = GameState.GameOver;
         }
 	}
@@ -39,11 +39,11 @@ public class LevelController : MonoBehaviour {
 
 		int i;
 
-		for (i = 1; i <= Mathf.Floor(game.Player.getLifes()); i++){
+		for (i = 1; i <= Mathf.Floor(game.Player.GetLifes()); i++){
 			colorNthHeart (i, Color.white);
 		}
 			
-		if (Mathf.Floor (game.Player.getLifes()) != game.Player.getLifes()) {
+		if (Mathf.Floor (game.Player.GetLifes()) != game.Player.GetLifes()) {
 			// Color next heart grey
 			colorNthHeart (i, new Color (1, 1, 1, 0.5f));
 			i++;
@@ -54,7 +54,7 @@ public class LevelController : MonoBehaviour {
 
 		}
 
-		this.lifes = game.Player.getLifes();
+		this.lifes = game.Player.GetLifes();
 	}
 
 	private void UpdateLevelIndicator() {

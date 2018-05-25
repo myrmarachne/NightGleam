@@ -167,7 +167,7 @@ public class PlayerController : PhysicsObject {
 
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.gameObject.name == "Elixir") {
-			game.Player.setLifes(game.Player.getLifes() + Item.ElixirImpact ());
+			game.Player.SetLifes(game.Player.GetLifes() + Item.ElixirImpact ());
 		}
 	}
 
@@ -176,7 +176,7 @@ public class PlayerController : PhysicsObject {
 	private void OnCollisionEnter2D (Collision2D collision){
 		if (collision.collider.name == "NPC" && !ignoreNPCCollisions) {
 			
-			game.Player.setLifes(game.Player.getLifes() - 1);
+			game.Player.SetLifes(game.Player.GetLifes() - 1);
 
 			Physics2D.IgnoreLayerCollision (8, 9, true);
 

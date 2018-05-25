@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : PhysicsObject {
-	
+	private const float playerBrightnessDecrease = 0.2f;
+
+	private Game game = Game.GetInstance();
     private const float SPEED = 1.5f;
 	private float sign;
 
@@ -35,6 +37,7 @@ public class EnemyController : PhysicsObject {
 
         if (collision.collider.name == "Spell(Clone)") {
             Destroy(this.gameObject);
+			game.Player.SetBrightness (game.Player.GetBrightness () - playerBrightnessDecrease);
         }
 
     }
