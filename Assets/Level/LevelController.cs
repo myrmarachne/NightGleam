@@ -7,6 +7,10 @@ public class LevelController : MonoBehaviour {
 
 	private float lifes;
 
+	protected void Awake(){
+		UpdateLifes ();
+	}
+
 	protected void Start() {
 		game.State = GameState.Playing;
 		lifes = game.Player.getLifes();
@@ -40,7 +44,7 @@ public class LevelController : MonoBehaviour {
 		int i;
 
 		for (i = 1; i <= Mathf.Floor(game.Player.getLifes()); i++){
-			colorNthHeart (i, Color.white);
+			colorNthHeart (i, new Color (1, 1, 1, 0.5f));
 		}
 			
 		if (Mathf.Floor (game.Player.getLifes()) != game.Player.getLifes()) {

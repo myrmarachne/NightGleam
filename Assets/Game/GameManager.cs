@@ -29,6 +29,6 @@ public class GameManager {
 		game.Level = n;
 		//TODO handle nth level
 
-		SceneManager.LoadScene ("2DPlatformerMain");
+		SceneManager.LoadScene ("Level1");
 	}
 }
