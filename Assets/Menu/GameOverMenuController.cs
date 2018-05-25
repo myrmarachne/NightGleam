@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 public class GameOverMenuController : MonoBehaviour {
 	private Game game = Game.GetInstance();
-	private CanvasGroup canvasGroup;
+	protected CanvasGroup canvasGroup;
 	private bool isMenuVisible = false;
+	protected GameState targetState = GameState.GameOver;
 
 	protected virtual void Start() {
 		canvasGroup = GetComponent<CanvasGroup> ();
@@ -18,7 +19,7 @@ public class GameOverMenuController : MonoBehaviour {
 
 	protected virtual void Update(){
 		if (!isMenuVisible) {
-			if (game.State == GameState.GameOver) {
+			if (game.State == targetState) {
 				ShowMenu ();
 			}
 		}
@@ -30,7 +31,7 @@ public class GameOverMenuController : MonoBehaviour {
 		}
 	}
 
-	private void ShowMenu() { 
+	protected void ShowMenu() { 
 		canvasGroup.alpha = 1.0f;
 		canvasGroup.interactable = true;
 		canvasGroup.blocksRaycasts = true;
