@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LightController : MonoBehaviour {
 	private const float minLightScale = 20;
-	private const float maxLightScale = 100;
-	private const float timeToRegenerateLight = 5.0f;
+	private const float maxLightScale = 70;
+	private const float timeToRegenerateLight = 30.0f;
 	private const float lightRegenerationStep = 0.2f;
 
 	private Game game = Game.GetInstance();
