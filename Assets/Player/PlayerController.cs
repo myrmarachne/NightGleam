@@ -153,7 +153,7 @@ public class PlayerController : PhysicsObject {
 
 
 	private void CastSpell() {
-		if (game.State == GameState.Playing) {
+		if (game.State == GameState.Playing && Time.timeScale != 0) {
 			SpellController castedSpell = Instantiate (spell, spellPosition.position, Quaternion.identity).GetComponent<SpellController> ();
 
 			Vector2 initialVelocity = spellVelocity;
