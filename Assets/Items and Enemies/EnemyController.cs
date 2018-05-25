@@ -6,12 +6,16 @@ public class EnemyController : PhysicsObject {
 	private const float playerBrightnessDecrease = 0.2f;
 
 	private Game game = Game.GetInstance();
-    private const float SPEED = 1.5f;
+    private const float SPEED = 1.2f;
 	private float sign;
+
+	public GameObject bubble;
 
 	protected override void Start() {
 		base.Start();
 		sign = 1f;
+
+
 	}
     
     protected override void ComputeVelocity() {
@@ -36,8 +40,18 @@ public class EnemyController : PhysicsObject {
     private void OnCollisionEnter2D(Collision2D collision) {
 
         if (collision.collider.name == "Spell(Clone)") {
-            Destroy(this.gameObject);
+			Vector3 newPosition = this.gameObject.transform.position;
+			newPosition.y = newPosition.y - 0.5f;			
+			GameObject bubbles = Instantiate (bubble, newPosition, Quaternion.identity);
+
+			if (bubbles.transform.localScale.x * this.gameObject.transform.localScale.x > 0) {
+				Vector3 scale = bubbles.transform.localScale;
+				scale.x *= -1;
+				bubbles.transform.localScale = scale;
+			}
 			game.Player.SetBrightness (game.Player.GetBrightness () - playerBrightnessDecrease);
+			Destroy(this.gameObject);
+
         }
 
     }

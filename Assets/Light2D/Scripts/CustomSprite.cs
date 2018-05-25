@@ -90,12 +90,17 @@ namespace Light2D
                 _meshFilter = gameObject.AddComponent<MeshFilter>();
             }
 
-#if UNITY_EDITOR
-            if (Material == null)
-            {
-                Material = Resources.GetBuiltinResource<Material>("Sprites-Default.mat");
-            }
-#endif
+			#if UNITY_EDITOR
+			if (Material == null)
+			{
+				Material = UnityEditor.AssetDatabase.GetBuiltinExtraResource<Material>("Sprites-Default.mat");
+			}
+			#else
+			if (Material == null)
+			{
+			Material = Resources.GetBuiltinResource<Material>("Sprites-Default.mat");
+			}
+			#endif
 
             TryReleaseMesh();
             _meshFilter.sharedMesh = _mesh = new Mesh();

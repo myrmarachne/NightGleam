@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/2DPlatformerController/2DPlatformerController/Assets/2DPlatformer/Scenes/2DPlatformerMain.unity
     guid: e0a1972c08fa4654a9c1bd74e5d9e085
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/2DPlatformerController/2DPlatformerController/Assets/2DPlatformer/Scenes/PauseMenu.unity
-    guid: fb15be04354554dfa8eb7318879f1300
+    path: Assets/2DPlatformerController/2DPlatformerController/Assets/2DPlatformer/Scenes/Level1.unity
+    guid: 07844476d0a44a14f9c7d4c84f794eca

@@ -87,7 +87,7 @@ public class PlayerController : PhysicsObject {
 	}
 
 	protected void FixedUpdate(){
-		animator.SetFloat ("Velocity", Mathf.Abs (rbody.velocity.x));
+		animator.SetFloat ("velocity", Mathf.Abs (rbody.velocity.x));
 		animator.SetBool ("IsGrounded", IsGrounded ());
 	}
 
@@ -124,10 +124,15 @@ public class PlayerController : PhysicsObject {
 
 	private void handleJump() {
 		if (Input.GetButtonDown("Jump")) {
+
+
 			float vy = rbody.velocity.y;
 			if (IsGrounded()) {
 				jumpType = JumpType.Normal;
 				rbody.AddForce(new Vector2(0, JUMP_TAKE_OFF_SPEED), ForceMode2D.Impulse);
+
+				animator.SetTrigger ("jump");
+
 			}
 			else if (jumpType == JumpType.Normal && vy > 0) {
 				jumpType = JumpType.Double;
@@ -167,7 +172,11 @@ public class PlayerController : PhysicsObject {
 
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.gameObject.name == "Elixir") {
-			game.Player.SetLifes(game.Player.GetLifes() + Item.ElixirImpact ());
+			game.Player.SetLifes (game.Player.GetLifes () + Item.ElixirImpact ());
+		} else if (collider.gameObject.name == "Door") {
+			Animator doorAnimator = collider.GetComponent<Animator> ();
+			doorAnimator.SetTrigger ("open");
+
 		}
 	}
 
