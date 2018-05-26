@@ -2,9 +2,8 @@
 using UnityEngine.UI;
 
 public class YouWonMenuController : GameOverMenuController {
-	protected GameState targetState = GameState.Won;
-
 	protected virtual void Start() {
+		targetState = GameState.Won;
 		canvasGroup = GetComponent<CanvasGroup> ();
 
 		// Attach buttons click event listeners

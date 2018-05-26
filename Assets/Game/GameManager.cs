@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager {
 	private static Game game = Game.GetInstance();
+	private static int numberOfLevels = 2;
 
 	public static void ShowMainMenu() {
 		game.State = GameState.Stopped;
@@ -26,9 +27,11 @@ public class GameManager {
 	}
 
 	public static void GoToNthLevel(int n) {
-		game.Level = n;
-		//TODO handle nth level
-
-		SceneManager.LoadScene ("Level" + n.ToString());
+		if (n > numberOfLevels) {
+			game.State = GameState.Won;
+		} else {
+			game.Level = n;
+			SceneManager.LoadScene ("Level" + n.ToString());
+		}
 	}
 }
