@@ -12,7 +12,7 @@ public class GameManager {
 
 	public static void StartGame() {
 		
-		game.maxLifes = 6;
+		game.maxLifes = 3;
 		game.Reset ();
 		GoToNthLevel (1);
 	}
@@ -29,6 +29,6 @@ public class GameManager {
 		game.Level = n;
 		//TODO handle nth level
 
-		SceneManager.LoadScene ("Level1");
+		SceneManager.LoadScene ("Level" + n.ToString());
 	}
 }

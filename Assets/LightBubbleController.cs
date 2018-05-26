@@ -34,6 +34,7 @@ public class LightBubbleController : MonoBehaviour {
 
 		if (textureColor.a <= 0f) {
 			Destroy(this.gameObject);
+			Destroy (this.transform.parent.gameObject);
 		}
 		rbody.velocity = new Vector2 (0, y);
 

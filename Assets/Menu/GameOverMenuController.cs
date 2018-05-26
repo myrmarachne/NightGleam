@@ -31,7 +31,9 @@ public class GameOverMenuController : MonoBehaviour {
 		}
 	}
 
-	protected void ShowMenu() { 
+	protected void ShowMenu() {
+		Cursor.visible = true;
+		
 		canvasGroup.alpha = 1.0f;
 		canvasGroup.interactable = true;
 		canvasGroup.blocksRaycasts = true;

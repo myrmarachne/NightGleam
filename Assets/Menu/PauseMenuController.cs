@@ -27,6 +27,8 @@ public class PauseMenuController : MonoBehaviour {
 
 	private void Pause() { 
 		// Pause game and show menu
+		Cursor.visible = true;
+
 		game.State = GameState.Paused;
 		canvasGroup.alpha = 1.0f;
 		canvasGroup.interactable = true;
@@ -35,6 +37,7 @@ public class PauseMenuController : MonoBehaviour {
 	}
 
 	public void Continue() {
+		Cursor.visible = false;
 		// Continue game and hide menu
 		game.State = GameState.Playing;
 		canvasGroup.alpha = 0.0f;

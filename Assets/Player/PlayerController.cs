@@ -176,7 +176,6 @@ public class PlayerController : PhysicsObject {
 		} else if (collider.gameObject.name == "Door") {
 			Animator doorAnimator = collider.GetComponent<Animator> ();
 			doorAnimator.SetTrigger ("open");
-
 		}
 	}
 

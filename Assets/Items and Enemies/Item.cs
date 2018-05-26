@@ -2,7 +2,7 @@
 
 public class Item : MonoBehaviour {
 
-    private static float loseProbability = 0.5f;
+    private static float loseProbability = 0.4f;
 
     private void OnTriggerEnter2D(Collider2D collider) {
         if (collider.name == "Player") {
@@ -15,7 +15,7 @@ public class Item : MonoBehaviour {
 		if (Random.Range (0f, 1.0f) < loseProbability) {
 			return -1;
 		} else {
-			return 3;
+			return 1;
 		}
     }
 }
