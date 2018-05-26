@@ -15,6 +15,8 @@ public class LevelController : MonoBehaviour {
 		game.State = GameState.Playing;
 		lifes = game.Player.getLifes();
 
+		Cursor.visible = false;
+
 		Physics2D.IgnoreLayerCollision (8, 9, false);
 
 		UpdateLevelIndicator ();
@@ -27,7 +29,8 @@ public class LevelController : MonoBehaviour {
 
 		if (game.State == GameState.Playing && game.Player.getLifes() == 0) {
 			game.State = GameState.GameOver;
-        }
+		} 
+
 	}
 
 	private void colorNthHeart(int n, Color color){
