@@ -18,4 +18,8 @@ public class Item : MonoBehaviour {
 			return 1;
 		}
     }
+
+	public static float LightElixirImpact() {
+		return 0.5f;
+	}
 }

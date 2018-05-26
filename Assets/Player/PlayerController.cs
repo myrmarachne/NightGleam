@@ -173,6 +173,8 @@ public class PlayerController : PhysicsObject {
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.gameObject.name == "Elixir") {
 			game.Player.SetLifes (game.Player.GetLifes () + Item.ElixirImpact ());
+		} else if (collider.gameObject.name == "LightElixir") {
+			game.Player.SetBrightness (game.Player.GetBrightness () + Item.LightElixirImpact ());
 		} else if (collider.gameObject.name == "Door") {
 			Animator doorAnimator = collider.GetComponent<Animator> ();
 			doorAnimator.SetTrigger ("open");
