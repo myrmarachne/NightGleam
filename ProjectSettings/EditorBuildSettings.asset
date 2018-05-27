@@ -4,4 +4,22 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/2DPlatformerController/2DPlatformerController/Assets/2DPlatformer/Scenes/MainMenu.unity
+    guid: 2555f58159ea24f4191722eb42937146
+  - enabled: 0
+    path: Assets/2DPlatformerController/2DPlatformerController/Assets/2DPlatformer/Scenes/2DPlatformerMain.unity
+    guid: e0a1972c08fa4654a9c1bd74e5d9e085
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/__DELETED_GUID_Trash/07844476d0a44a14f9c7d4c84f794eca
+    guid: 07844476d0a44a14f9c7d4c84f794eca
+  - enabled: 1
+    path: Assets/2DPlatformerController/2DPlatformerController/Assets/2DPlatformer/Scenes/Level2.unity
+    guid: d3dd38c97f1b0bd4090dfd3cda88f5e5
+  - enabled: 1
+    path: Assets/2DPlatformerController/2DPlatformerController/Assets/2DPlatformer/Scenes/Level1.unity
+    guid: 6f580e7f94aff49458c29d1dffa8687e
